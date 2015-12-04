@@ -1,0 +1,3 @@
+[submodule "mcp_base"]
+	path = mcp_base
+	url = git@github.com:electromatter/mcp_base
