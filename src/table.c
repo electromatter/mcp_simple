@@ -107,7 +107,7 @@ struct table *load_table(const char *path)
 			if (!right)
 				goto ERROR;
 			
-			if (!comment && add_row(table, left, right))
+			if (add_row(table, left, right))
 				goto ERROR;
 			
 LINE_DONE:
@@ -130,6 +130,9 @@ LINE_DONE:
 			break;
 			
 		default:
+			if (comment)
+				break;
+			
 			if (white && left == NULL)
 				left = raw;
 			else if (white && right == NULL)

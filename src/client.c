@@ -251,8 +251,10 @@ static int handshake_ok(struct client *c, struct mcr_handshake_start *hs)
 		return -1;
 	
 	ev_io_set(&c->peer, connect_peer(target, DEAFULT_PEER_PORT), 0);
-	if (c->peer.fd < 0)
+	if (c->peer.fd < 0) {
+		printf("%i bad target: %s\n", c->w.fd, target);
 		return -1;
+	}
 	
 	printf("%i => %s\n", c->w.fd, target);
 	
