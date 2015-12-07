@@ -31,7 +31,7 @@ static char *load_file(const char*path)
 	fclose(f);
 	
 	ptr[actual] = 0;
-	new_ptr = realloc(ptr, actual);
+	new_ptr = realloc(ptr, actual + 1);
 	
 	if(new_ptr)
 		return new_ptr;
