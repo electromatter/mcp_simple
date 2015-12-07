@@ -17,4 +17,10 @@
 #define	HANDSHAKE_TIMEOUT	(30)
 #define DEAFULT_PEER_PORT	(25565)
 
+/* motd config*/
+#define MOTD_TIMEOUT			(5)
+#define MCP_MOTD_FILE			"/etc/mcp_motd"
+#define MCP_DISCONNECT_MESSAGE	"Wrong Server Address."
+
+
 #endif

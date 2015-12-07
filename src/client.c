@@ -88,8 +88,12 @@ static void client_trampoline(struct ev_loop *loop, struct ev_io *w, int revents
 				return;
 			}
 			
-			if (fbuf_avail(&c->from_peer_buf) == 0 && ! c->peer_can_read)
-				shutdown(c->w.fd, SHUT_WR);
+			if (fbuf_avail(&c->from_peer_buf) == 0 && ! c->peer_can_read) {
+				if (shutdown(c->w.fd, SHUT_WR) < 0) {
+					free_client(c);
+					return;
+				}
+			}
 		}
 		
 		if (set_watchers(c) < 0) {
@@ -153,8 +157,12 @@ static void peer_trampoline(struct ev_loop *loop, struct ev_io *w, int revents)
 				return;
 			}
 			
-			if (fbuf_avail(&c->from_client_buf) == 0 && ! c->can_read)
-				shutdown(c->peer.fd, SHUT_WR);
+			if (fbuf_avail(&c->from_client_buf) == 0 && ! c->can_read) {
+				if (shutdown(c->peer.fd, SHUT_WR) < 0) {
+					free_client(c);
+					return;
+				}
+			}
 		}
 		
 		if (set_watchers(c) < 0) {

@@ -7,7 +7,7 @@
 
 #include "config.h"
 
-static char *load_file(const char*path)
+char *load_file(const char*path)
 {
 	FILE *f = fopen(path, "r");
 	char *ptr, *new_ptr;
