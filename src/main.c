@@ -65,7 +65,7 @@ int main(int argc, char **argv)
 	
 	(void)argc; (void)argv;
 	
-	fd = create_listener(NULL, 25565);
+	fd = create_listener(getenv("MCP_LISTENER"), 25565);
 	if (fd < 0) {
 		perror("-1 failed to listen");
 		return 1;
