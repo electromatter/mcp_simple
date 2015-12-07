@@ -1,5 +1,5 @@
 # MCP_SIMPLE
 
-A simple implementation of something like bungee.
+A simple gateway for Minecraft.
 Under the ISC license, see the LICENSE file for details.
 

@@ -1,0 +1,13 @@
+check for circular routes
+config for listeners
+ipv6
+recursive routes
+round robin
+better logging
+dns resolution
+motd cache
+mod support
+fallback
+syslog
+control socket
+ip forwarding
