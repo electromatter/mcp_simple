@@ -69,7 +69,7 @@ struct table *load_table(const char *path)
 {
 	char *raw, *left, *right;
 	struct table *table;
-	int comment, white, line;
+	int comment, white, line, more;
 	
 	raw = load_file(path);
 	if (raw == NULL)
@@ -89,21 +89,34 @@ struct table *load_table(const char *path)
 	comment = 0;
 	white = 1;
 	line = 1;
+	more = 1;
 	
 	left = NULL;
 	right = NULL;
 	
-	for (; *raw; raw++) {
+	while (more) {
 		switch (*raw) {
+		case '\0':
+			more = 0;
 		case '\n':
 			*raw = 0;
+			
+			if (!left)
+				goto LINE_DONE;
+			
+			if (!right)
+				goto ERROR;
+			
 			if (!comment && add_row(table, left, right))
 				goto ERROR;
+			
+LINE_DONE:
 			left = NULL;
 			right = NULL;
 			comment = 0;
 			white = 1;
 			line++;
+			
 			break;
 			
 		case '\t':
@@ -127,13 +140,9 @@ struct table *load_table(const char *path)
 			white = 0;
 			break;
 		}
+		
+		raw++;
 	}
-	
-	if (right && left)
-		add_row(table, left, right);
-	
-	if (right == NULL || left == NULL)
-		goto ERROR;
 	
 	return table;
 ERROR:
