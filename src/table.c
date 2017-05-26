@@ -221,7 +221,12 @@ static int probe_insert(struct table_entry *table, size_t size, struct table_ent
 
 const char *table_lookup(struct table *table, const char *name)
 {
-	uint64_t hash = fnv_1a(name) % table->num_entries;
+	uint64_t hash;
+
+	if (table->num_entries <= 0)
+		return NULL;
+	
+	hash = fnv_1a(name) % table->num_entries;
 	
 	while (1) {
 		if (table->entries[hash].key == NULL)
